@@ -17,6 +17,18 @@ class App extends React.Component {
     filter: '',
   };
 
+  componentDidMount() {
+    const storedContacts = localStorage.getItem('contacts');
+    if (storedContacts) {
+      this.setState({ contacts: JSON.parse(storedContacts) });
+    }
+  }
+
+  componentDidUpdate() {
+    const { contacts } = this.state;
+    localStorage.setItem('contacts', JSON.stringify(contacts));
+  }
+
   addContact = (name, number) => {
     if (this.isContactExist(name)) {
       alert(`"${name}" contact already exists in the phone book.`);
